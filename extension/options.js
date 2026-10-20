@@ -1,6 +1,7 @@
 const $ = (id) => document.getElementById(id);
 
 (async function init() {
+  $('version').textContent = '云记事本 v' + chrome.runtime.getManifest().version;
   const config = await getConfig();
   $('apiUrl').value = config.apiUrl || DEFAULT_API_URL;
   $('token').value = config.token || '';
