@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>云记事本 — 同步设置</title>
+<style>
+  body { font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; max-width: 560px; margin: 40px auto; padding: 0 20px; color: #222; }
+  h1 { font-size: 20px; margin-bottom: 8px; }
+  p.hint { color: #666; font-size: 13px; margin-bottom: 20px; }
+  label { display: block; font-weight: 500; margin: 16px 0 6px; }
+  input { width: 100%; padding: 8px 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; box-sizing: border-box; }
+  .row { margin-top: 20px; display: flex; gap: 10px; }
+  button { padding: 8px 18px; border-radius: 6px; border: 1px solid #d0d0d0; background: #fff; cursor: pointer; font-size: 14px; }
+  button.primary { background: #2563eb; color: #fff; border-color: #2563eb; }
+  #result { margin-top: 16px; font-size: 13px; min-height: 20px; }
+</style>
+</head>
+<body>
+  <h1>📝 云记事本 — 同步设置</h1>
+  <p class="hint">笔记数据保存在你自己的 Cloudflare Worker + KV 里。在任意一台电脑的 Chrome 装上本插件、填入同样的地址和令牌，即可同步。</p>
+
+  <label for="apiUrl">Worker 地址</label>
+  <input id="apiUrl" type="text" spellcheck="false">
+
+  <label for="token">同步令牌（NOTE_TOKEN）</label>
+  <input id="token" type="password" spellcheck="false" placeholder="部署时设置的令牌">
+
+  <div class="row">
+    <button id="saveBtn" class="primary">保存</button>
+    <button id="testBtn">测试连接</button>
+  </div>
+  <div id="result"></div>
+
+  <script src="sync.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

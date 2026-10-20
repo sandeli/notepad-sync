@@ -1,0 +1,8 @@
+name = "notepad-sync"
+main = "worker.js"
+compatibility_date = "2025-01-01"
+
+[[kv_namespaces]]
+binding = "NOTES_KV"
+# wrangler kv namespace create notepad-kv 之后，把返回的 id 填到这里
+id = "YOUR_KV_NAMESPACE_ID"
