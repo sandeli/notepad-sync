@@ -13,12 +13,8 @@ function setStatus(text) { $('status').textContent = text; }
 
 function fmtTime(ts) {
   const d = new Date(ts);
-  const now = new Date();
-  const sameDay = d.toDateString() === now.toDateString();
   const pad = (n) => String(n).padStart(2, '0');
-  return sameDay
-    ? `${pad(d.getHours())}:${pad(d.getMinutes())}`
-    : `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  return `${d.getFullYear()}年${pad(d.getMonth() + 1)}月${pad(d.getDate())}日 ${pad(d.getHours())}:${pad(d.getMinutes())}`;
 }
 
 function renderList() {
