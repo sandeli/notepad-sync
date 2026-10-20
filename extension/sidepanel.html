@@ -20,6 +20,16 @@
   #editorView { flex: 1; display: none; flex-direction: column; }
   #editor { flex: 1; border: none; outline: none; resize: none; padding: 12px; font-size: 14px; line-height: 1.6; font-family: inherit; }
   .danger { color: #c0392b !important; border-color: #e0b4ae !important; }
+
+  .confirm-overlay { position: fixed; inset: 0; background: rgba(0,0,0,.35); display: flex; align-items: center; justify-content: center; z-index: 10; }
+  .confirm-card { background: #fff; border-radius: 14px; padding: 22px 20px 16px; width: 82%; max-width: 300px; box-shadow: 0 8px 32px rgba(0,0,0,.25); text-align: center; }
+  .confirm-card .ct { font-size: 15px; font-weight: 600; margin-bottom: 8px; }
+  .confirm-card .cp { font-size: 13px; color: #777; line-height: 1.5; margin-bottom: 18px; word-break: break-all; }
+  .confirm-card .ca { display: flex; gap: 10px; }
+  .confirm-card .ca button { flex: 1; border: 1px solid #d0d0d0; background: #fff; border-radius: 8px; padding: 8px 0; cursor: pointer; font-size: 14px; }
+  .confirm-card .ca button:hover { background: #f0f0f0; }
+  .confirm-card .ca .danger-solid { background: #d9534f; border-color: #d9534f; color: #fff; }
+  .confirm-card .ca .danger-solid:hover { background: #c9302c; }
   .hidden { display: none !important; }
 </style>
 </head>
@@ -37,6 +47,17 @@
 
   <div id="editorView">
     <textarea id="editor" placeholder="写点什么…（自动保存并同步）"></textarea>
+  </div>
+
+  <div id="confirmOverlay" class="confirm-overlay hidden">
+    <div class="confirm-card">
+      <div class="ct">删除这条笔记？</div>
+      <div class="cp" id="confirmText">删除后所有设备都会同步删除</div>
+      <div class="ca">
+        <button id="cancelDeleteBtn">取消</button>
+        <button id="confirmDeleteBtn" class="danger-solid">删除</button>
+      </div>
+    </div>
   </div>
 
   <script src="sync.js"></script>

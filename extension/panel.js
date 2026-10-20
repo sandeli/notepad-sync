@@ -102,12 +102,24 @@ $('backBtn').addEventListener('click', () => {
   showView('list');
 });
 
-$('deleteBtn').addEventListener('click', async () => {
+function hideConfirm() { $('confirmOverlay').classList.add('hidden'); }
+
+$('deleteBtn').addEventListener('click', () => {
   if (!currentId) return;
-  if (!confirm('删除这条笔记？（所有设备同步删除）')) return;
+  const n = notes[currentId];
+  $('confirmText').textContent = '「' + (n ? (n.title || deriveTitle(n.content) || '未命名笔记') : '') + '」删除后所有设备都会同步删除';
+  $('confirmOverlay').classList.remove('hidden');
+});
+
+$('cancelDeleteBtn').addEventListener('click', hideConfirm);
+$('confirmOverlay').addEventListener('click', (e) => { if (e.target === $('confirmOverlay')) hideConfirm(); });
+
+$('confirmDeleteBtn').addEventListener('click', async () => {
+  if (!currentId) { hideConfirm(); return; }
   delete notes[currentId];
   tombstones[currentId] = Date.now();
   currentId = null;
+  hideConfirm();
   await saveLocal(notes, tombstones);
   renderList();
   showView('list');

@@ -27,7 +27,7 @@
     "alarms",
     "sidePanel"
   ],
-  "version": "1.2.4",
+  "version": "1.2.5",
   "side_panel": {
     "default_path": "sidepanel.html"
   }
