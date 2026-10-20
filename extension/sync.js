@@ -37,13 +37,16 @@ async function apiFetch(path, options = {}) {
   return res.json();
 }
 
-// 淡色板 [底色, 强调色]：每条笔记一个颜色，新建时随机选，老笔记按 id 哈希稳定补一个
+// 淡雅色板 [底色, 强调色]：耳语般的浅底 + 低饱和柔和色条
 const PASTEL_COLORS = [
-  ['#FBD9D9', '#E57373'], ['#FFEDBE', '#D9A441'], ['#CDEED3', '#66BB6A'],
-  ['#C9E2FF', '#5B9BD5'], ['#DFD3FF', '#9575CD'], ['#FFD3E8', '#EC7FA5'],
-  ['#C4EEE6', '#4DB6AC'], ['#FFE0C2', '#F0A35E'], ['#E2F0B4', '#9DBE4F'],
-  ['#D3D9F5', '#7986CB'],
+  ['#FDECEC', '#D89A9A'], ['#FCF3DC', '#C9AE6A'], ['#EBF5EC', '#93BE9B'],
+  ['#EAF1FB', '#8FAED6'], ['#F2EEFB', '#AEA0D3'], ['#FCEEF4', '#D29FBB'],
+  ['#E9F5F2', '#8FBFB4'], ['#FAF0E4', '#D3A87F'], ['#F3F7E3', '#AEC078'],
+  ['#EDEFF9', '#99A3CC'],
 ];
+// 旧版底色（用于识别已存颜色的序号，保证同一条笔记颜色身份不变）
+const LEGACY_BGS_V10 = ['#FDE8E8', '#FFF3D6', '#E3F6E3', '#E1F0FF', '#EFE7FF', '#FFE9F3', '#E6F7F4', '#FFF0E1', '#F1F8DC', '#E8EAF6'];
+const LEGACY_BGS_V11 = ['#FBD9D9', '#FFEDBE', '#CDEED3', '#C9E2FF', '#DFD3FF', '#FFD3E8', '#C4EEE6', '#FFE0C2', '#E2F0B4', '#D3D9F5'];
 
 function randomColor() {
   return PASTEL_COLORS[Math.floor(Math.random() * PASTEL_COLORS.length)][0];
@@ -51,7 +54,11 @@ function randomColor() {
 
 function colorIndexFor(note) {
   if (note && note.color) {
-    const i = PASTEL_COLORS.findIndex(([bg]) => bg === note.color);
+    let i = PASTEL_COLORS.findIndex(([bg]) => bg === note.color);
+    if (i >= 0) return i;
+    i = LEGACY_BGS_V11.indexOf(note.color);
+    if (i >= 0) return i;
+    i = LEGACY_BGS_V10.indexOf(note.color);
     if (i >= 0) return i;
   }
   const id = (note && note.id) || '';

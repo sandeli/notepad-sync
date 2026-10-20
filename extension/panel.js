@@ -32,7 +32,7 @@ function renderList() {
     const div = document.createElement('div');
     div.className = 'note-item';
     div.style.background = colorForNote(n);
-    div.style.borderLeft = '5px solid ' + accentForNote(n);
+    div.style.borderLeft = '4px solid ' + accentForNote(n);
     const t = document.createElement('div');
     t.className = 't';
     t.textContent = n.title || deriveTitle(n.content);
