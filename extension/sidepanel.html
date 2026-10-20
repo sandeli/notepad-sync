@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { width: 100%; min-width: 260px; height: 100vh; font-family: -apple-system, "Segoe UI", "Microsoft YaHei", sans-serif; font-size: 14px; color: #222; display: flex; flex-direction: column; }
+  header { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-bottom: 1px solid #e5e5e5; background: #fafafa; }
+  header .title { font-weight: 600; flex: 1; }
+  header button { border: 1px solid #d0d0d0; background: #fff; border-radius: 6px; padding: 4px 10px; cursor: pointer; font-size: 13px; }
+  header button:hover { background: #f0f0f0; }
+  #status { font-size: 11px; color: #888; padding: 4px 12px; min-height: 18px; }
+  #listView { flex: 1; overflow-y: auto; }
+  .note-item { padding: 10px 12px; border-bottom: 1px solid #f0f0f0; cursor: pointer; }
+  .note-item:hover { background: #f7f9ff; }
+  .note-item .t { font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .note-item .p { color: #888; font-size: 12px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 2px; }
+  .note-item .time { color: #bbb; font-size: 11px; margin-top: 2px; }
+  .empty { text-align: center; color: #aaa; padding: 60px 20px; }
+  #editorView { flex: 1; display: none; flex-direction: column; }
+  #editor { flex: 1; border: none; outline: none; resize: none; padding: 12px; font-size: 14px; line-height: 1.6; font-family: inherit; }
+  .danger { color: #c0392b !important; border-color: #e0b4ae !important; }
+  .hidden { display: none !important; }
+</style>
+</head>
+<body>
+  <header>
+    <button id="backBtn" class="hidden">← 返回</button>
+    <span class="title" id="headerTitle">📝 云记事本</span>
+    <button id="deleteBtn" class="danger hidden">删除</button>
+    <button id="newBtn">＋ 新建</button>
+    <button id="settingsBtn" title="同步设置">⚙</button>
+  </header>
+  <div id="status"></div>
+
+  <div id="listView"></div>
+
+  <div id="editorView">
+    <textarea id="editor" placeholder="写点什么…（自动保存并同步）"></textarea>
+  </div>
+
+  <script src="sync.js"></script>
+  <script src="panel.js"></script>
+</body>
+</html>

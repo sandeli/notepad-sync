@@ -37,19 +37,35 @@ async function apiFetch(path, options = {}) {
   return res.json();
 }
 
-// 淡色板：每条笔记一个颜色，新建时随机选，老笔记按 id 哈希稳定补一个
-const PASTEL_COLORS = ['#FDE8E8', '#FFF3D6', '#E3F6E3', '#E1F0FF', '#EFE7FF', '#FFE9F3', '#E6F7F4', '#FFF0E1', '#F1F8DC', '#E8EAF6'];
+// 淡色板 [底色, 强调色]：每条笔记一个颜色，新建时随机选，老笔记按 id 哈希稳定补一个
+const PASTEL_COLORS = [
+  ['#FBD9D9', '#E57373'], ['#FFEDBE', '#D9A441'], ['#CDEED3', '#66BB6A'],
+  ['#C9E2FF', '#5B9BD5'], ['#DFD3FF', '#9575CD'], ['#FFD3E8', '#EC7FA5'],
+  ['#C4EEE6', '#4DB6AC'], ['#FFE0C2', '#F0A35E'], ['#E2F0B4', '#9DBE4F'],
+  ['#D3D9F5', '#7986CB'],
+];
 
 function randomColor() {
-  return PASTEL_COLORS[Math.floor(Math.random() * PASTEL_COLORS.length)];
+  return PASTEL_COLORS[Math.floor(Math.random() * PASTEL_COLORS.length)][0];
 }
 
-function colorForNote(note) {
-  if (note && note.color) return note.color;
+function colorIndexFor(note) {
+  if (note && note.color) {
+    const i = PASTEL_COLORS.findIndex(([bg]) => bg === note.color);
+    if (i >= 0) return i;
+  }
   const id = (note && note.id) || '';
   let h = 0;
   for (let i = 0; i < id.length; i++) h = (h * 31 + id.charCodeAt(i)) >>> 0;
-  return PASTEL_COLORS[h % PASTEL_COLORS.length];
+  return h % PASTEL_COLORS.length;
+}
+
+function colorForNote(note) {
+  return PASTEL_COLORS[colorIndexFor(note)][0];
+}
+
+function accentForNote(note) {
+  return PASTEL_COLORS[colorIndexFor(note)][1];
 }
 
 function newId() {
